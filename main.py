@@ -37,3 +37,46 @@ print(f"Grade: {grade}")
 print(f"Remark: {remark}")
 
 print("=" * 40)
+
+
+# main.py
+from access_control import compute_access_level, validate_access, audit_log
+
+CONTROL_NUM = max(1, 9)
+
+@audit_log
+def run_authorization():
+    level = compute_access_level(CONTROL_NUM)
+    return validate_access(level, CONTROL_NUM)
+
+print(run_authorization())
+
+def audit_log(func):
+    def wrapper(*args, **kwargs):
+        print("Authorization Started")
+        result = func(*args, **kwargs)
+        print("Authorization Completed")
+        return result
+    return wrapper
+
+@audit_log
+def signal_shutdown(power):
+    if power == 0:
+        return 0
+    print(f"Signal strength: {power}")
+    return 1 + signal_shutdown(power - 1)
+
+CONTROL_NUM = max(1, 9)
+total_calls = signal_shutdown(CONTROL_NUM + len("Taylor Swift"))
+print("Total recursive calls:", total_calls)
+
+# main.py (continued)
+from media_engine import run_stream
+
+CONTROL_NUM = max(1, 9)
+limit = CONTROL_NUM + len("Taylor Swift")
+
+plays, records = run_stream(limit)
+print("Total plays:", plays)
+print("Records processed:", records)
+

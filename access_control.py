@@ -1,0 +1,15 @@
+# access_control.py
+def compute_access_level(control):
+    return control * 3 + len("Taylor Swift")
+
+def validate_access(level, control):
+    threshold = control * 5
+    return "ACCESS GRANTED" if level >= threshold else "ACCESS DENIED"
+
+def audit_log(func):
+    def wrapper(*args, **kwargs):
+        print("Authorization Started")
+        result = func(*args, **kwargs)
+        print("Authorization Completed")
+        return result
+    return wrapper
